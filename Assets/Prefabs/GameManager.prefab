@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6792857779586659348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7929211953259660175}
+  - component: {fileID: 5242308852252644216}
+  - component: {fileID: 8219204280087089608}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7929211953259660175
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792857779586659348}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5242308852252644216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792857779586659348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe20e4f28276b2c418ecb52a7adba4ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spritePrefab: {fileID: 4474727536755891516, guid: 2af230b5ce876cd46a3c1e87ec72ebbe, type: 3}
+  nombreDeSprites: 15
+  spawnSpriteManager: {fileID: 8219204280087089608}
+  sprites:
+  - {fileID: 21300000, guid: f2fffc6329d43ba4c9bd756e85cf556c, type: 3}
+  - {fileID: 21300000, guid: 54e0b13809d4c4147ac1906e7bc919fc, type: 3}
+  - {fileID: 21300000, guid: 43b27beea632ef34a989be274d7f1e01, type: 3}
+  - {fileID: 21300000, guid: 28a5090813fb76046a6b6a83c79cf9d2, type: 3}
+  - {fileID: 21300000, guid: 96522dcb4c42157479a8f2d48d3f7a8b, type: 3}
+  - {fileID: 21300000, guid: 515b76cbf2ab03444b281165d09e9b6f, type: 3}
+  - {fileID: 21300000, guid: b363629bd0df8114283b34724f8210c7, type: 3}
+  - {fileID: 21300000, guid: 23c0b3376b316b542b47c9bd2cab3b61, type: 3}
+  - {fileID: 21300000, guid: f557b011ac215b9488de01e0848d035d, type: 3}
+  - {fileID: 21300000, guid: 58ba216cf2f96954c904ba85fd3f1fb5, type: 3}
+  - {fileID: 21300000, guid: 4f755e8de15a4a843bd11e13b2217d47, type: 3}
+  - {fileID: 21300000, guid: f214e912ed5a6a346ae4a453c9dd2700, type: 3}
+  - {fileID: 21300000, guid: 8b80c5571b0215c43928d2df377e9d08, type: 3}
+  - {fileID: 21300000, guid: 9b393a7508ab1e84f9917500588b3cce, type: 3}
+  - {fileID: 21300000, guid: 2958309def9532745aaa2cb47bbc17f3, type: 3}
+  zoneSpawnSprite: {fileID: 0}
+  affiche: {fileID: 0}
+  canvas: {fileID: 0}
+  scoreText: {fileID: 0}
+  bdaPointPrefab: {fileID: 2202628169334212215, guid: 89a648cedc9df824ea734e5529a31d52, type: 3}
+  score: 0
+  bonusChronoPrefab: {fileID: 5084973140554824146, guid: a71caf3c902d6f240b47df4a52838ab4, type: 3}
+  chronoInitial: 15
+  chronoBonus: 3
+  chronoMalus: 5
+  chronoMax: 60
+  chronoText: {fileID: 0}
+  gameOverText: {fileID: 707039327519512450, guid: cef9690d92f6aff49990dd42ee7c4cbe, type: 3}
+  blinkingScore: {fileID: 0}
+--- !u!114 &8219204280087089608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6792857779586659348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7466781372f1dae4e8fd54285d75bc2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

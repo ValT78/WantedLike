@@ -90,3 +90,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7466781372f1dae4e8fd54285d75bc2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roundBatches: 1
+  firstDifficulty: 5
+  secondDifficulty: 20
+  thirdDifficulty: 50
+  chooseColors: []
+  chooseRotations: []
+  chooseMovements: []
+  chooseScale: []

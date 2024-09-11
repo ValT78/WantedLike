@@ -9,6 +9,10 @@ public class SpriteClickable : MonoBehaviour
     public Vector2 direction;
     public float speed;
     public bool bounceOnEdges;
+    public bool isSinusoidal;
+    public float frequency; // Fréquence de l'oscillation
+    public float amplitude; // Amplitude de l'oscillation
+    private float time; // Temps écoulé
 
     [SerializeField] private RectTransform rectTransform;
     private RectTransform zoneSpawnSprite;
@@ -24,17 +28,32 @@ public class SpriteClickable : MonoBehaviour
         MoveSprite();
     }
 
-    public void Initialized(int spriteID, Vector2 direction, float speed, bool bounceOnEdges)
+    public void Initialized(int spriteID, Vector2 direction, float speed, bool bounceOnEdges, bool isSinusoidal, float amplitude, float frequency)
     {
         this.spriteID = spriteID;
         this.direction = direction;
         this.speed = speed;
         this.bounceOnEdges = bounceOnEdges;
+        this.isSinusoidal = isSinusoidal;
+        this.amplitude = amplitude;
+        this.frequency = frequency;
     }
 
+    
     void MoveSprite()
     {
+        time += Time.deltaTime;
+
+        // Calcul de la nouvelle position avec oscillation sinusoïdale
         Vector3 newPosition = rectTransform.localPosition + speed * Time.deltaTime * (Vector3)direction;
+        if (isSinusoidal)
+        {
+            // Calcul du vecteur perpendiculaire à la direction
+            Vector2 perpendicularDirection = new Vector2(-direction.y, direction.x).normalized;
+
+            // Appliquer l'oscillation sinusoïdale le long du vecteur perpendiculaire
+            newPosition += (Vector3)(amplitude * Mathf.Sin(time * frequency) * perpendicularDirection);
+        }
 
         if (bounceOnEdges)
         {
@@ -72,4 +91,5 @@ public class SpriteClickable : MonoBehaviour
 
         rectTransform.localPosition = newPosition;
     }
+
 }

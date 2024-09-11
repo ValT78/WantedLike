@@ -683,8 +683,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb2b7ed4dbf3c74fbfe61bdbe1aa2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textMeshPro: {fileID: 7656560922943927419}
+  textScore: {fileID: 0}
   blinkInterval: 0.8
+  logoTransform: {fileID: 0}
+  growthOnPulse: 0.2
+  pulseDuration: 0.7
+  useCachedDeltaTime: 0
 --- !u!1 &3914650880558016145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,8 +1022,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb2b7ed4dbf3c74fbfe61bdbe1aa2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textMeshPro: {fileID: 6332634899989895516}
+  textScore: {fileID: 6332634899989895516}
   blinkInterval: 0.3
+  logoTransform: {fileID: 7603587704080819039}
+  growthOnPulse: 0.5
+  pulseDuration: 1
+  useCachedDeltaTime: 0
 --- !u!1 &6449747024649000029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,7 +1492,6 @@ GameObject:
   - component: {fileID: 7603587704080819039}
   - component: {fileID: 8876225077757382721}
   - component: {fileID: 5879278034378898510}
-  - component: {fileID: 8661740270345559869}
   m_Layer: 5
   m_Name: IconScore
   m_TagString: Untagged
@@ -1549,20 +1556,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8661740270345559869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8324346579691080521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcb2b7ed4dbf3c74fbfe61bdbe1aa2c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textMeshPro: {fileID: 6332634899989895516}
-  blinkInterval: 0.3
 --- !u!1 &8363916352872455854
 GameObject:
   m_ObjectHideFlags: 0

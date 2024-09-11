@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     private EventSystem eventSystem;
 
     [Header("Score")]
-    [SerializeField] private ScoreAnimator scoreText; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
+    [SerializeField] private ScoreAnimator scoreDisplay; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
     [SerializeField] private GameObject bdaPointPrefab; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
     [HideInInspector] public int score;
 
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     [Header("EndGame")]
     [SerializeField] private GameObject gameOverText; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
-    [SerializeField] private GameObject blinkingScore; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
+    [SerializeField] private GameObject finalBlinkingScore; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
     private bool isGameOver;
 
     private void Awake()
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
         raycaster = canvas.GetComponent<GraphicRaycaster>();
         eventSystem = EventSystem.current;
         LaunchNewRound();
-        StartCoroutine(scoreText.BlinkText("0", 4));
+        scoreDisplay.BlinkText("0", 4);
     }
 
     void Update()
@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour
                 {
                     UpdateScore();
                     Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity).GetComponent<FloatingText>().Initialized(true, normalizedTouchPosition);
-                    StartCoroutine(Instantiate(bdaPointPrefab, Camera.main.ScreenToWorldPoint(touchPosition), Quaternion.identity).GetComponent<HyperbolicTrajectory>().MoveObject(scoreText.transform.position + new Vector3(1f, 0f, 0f)));
+                    StartCoroutine(Instantiate(bdaPointPrefab, Camera.main.ScreenToWorldPoint(touchPosition), Quaternion.identity).GetComponent<HyperbolicTrajectory>().MoveObject(scoreDisplay.transform.position + new Vector3(1f, 0f, 0f)));
                     chrono = Mathf.Min(chrono + chronoBonus, chronoMax);
                     StartCoroutine(FindTargetSprite(spriteClickable));
                 }
@@ -272,7 +272,8 @@ public class GameManager : MonoBehaviour
     private void UpdateScore()
     {
         score++;
-        StartCoroutine(scoreText.BlinkText(score.ToString(), 4));
+        scoreDisplay.BlinkText(score.ToString(), 4);
+        scoreDisplay.PulseLogoGrow();
     }
 
     private void UpdateChrono()
@@ -291,7 +292,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         chrono = 0;
         chronoText.GetComponent<TextMeshProUGUI>().text = "0";
-        StartCoroutine(blinkingScore.GetComponent<ScoreAnimator>().BlinkText("Final Score : " + score + "\nPress to Continue"));
+        finalBlinkingScore.GetComponent<ScoreAnimator>().BlinkText("Final Score : " + score + "\nPress to Continue");
         Instantiate(gameOverText);
         DestroyAllSprites();
     }

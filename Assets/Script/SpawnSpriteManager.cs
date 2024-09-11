@@ -34,11 +34,16 @@ public class SpawnSpriteManager : MonoBehaviour
 
     private void Awake()
     {
-        zoneSpawnSprite = GameManager.Instance.zoneSpawnSprite;
         chooseColors = new List<Color> { Color.red, Color.blue, Color.green, Color.yellow, Color.magenta, Color.cyan };
         chooseRotations = new List<float> { 0, 180, 90, 270, 45, 315, 225, 135 };
         chooseMovements = new List<Vector3> { Vector3.zero, Vector3.up, Vector3.down, Vector3.left, Vector3.right };
         chooseScale = new List<float> { 0.5f, 1f, 1.5f, 2f };
+
+    }
+
+    private void Start()
+    {
+        zoneSpawnSprite = GameManager.Instance.zoneSpawnSprite;
 
     }
 

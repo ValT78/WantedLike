@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class BlinkingText : MonoBehaviour
+public class ScoreAnimator : MonoBehaviour
 {
     public TextMeshProUGUI textMeshPro;
     public float blinkInterval; // Intervalle de clignotement en secondes

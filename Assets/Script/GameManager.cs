@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     private EventSystem eventSystem;
 
     [Header("Score")]
-    [SerializeField] private BlinkingText scoreText; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
+    [SerializeField] private ScoreAnimator scoreText; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
     [SerializeField] private GameObject bdaPointPrefab; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
     [HideInInspector] public int score;
 
@@ -291,7 +291,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         chrono = 0;
         chronoText.GetComponent<TextMeshProUGUI>().text = "0";
-        StartCoroutine(blinkingScore.GetComponent<BlinkingText>().BlinkText("Final Score : " + score + "\nPress to Continue"));
+        StartCoroutine(blinkingScore.GetComponent<ScoreAnimator>().BlinkText("Final Score : " + score + "\nPress to Continue"));
         Instantiate(gameOverText);
         DestroyAllSprites();
     }

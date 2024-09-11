@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        chrono = chronoInitial;
+
         if (Instance == null)
         {
             Instance = this;
@@ -70,7 +72,6 @@ public class GameManager : MonoBehaviour
         eventSystem = EventSystem.current;
         LaunchNewRound();
         StartCoroutine(scoreText.BlinkText("0", 4));
-        chrono = chronoInitial;
     }
 
     void Update()
@@ -130,9 +131,7 @@ public class GameManager : MonoBehaviour
         affiche.sprite = sprites[index];
 
         DestroyAllSprites(); // Détruire tous les sprites générés
-
-        nombreDeSprites = 3 + 2 * (int)Mathf.Log((score + 1) * 2, 3);
-
+        nombreDeSprites = (int)(5 * Mathf.Log(score / 3 + 1.6f, 2));
         // Sélectionner les transformations
         spawnSpriteManager.ChooseTransformation(score);
 
@@ -251,10 +250,12 @@ public class GameManager : MonoBehaviour
             var sortedChildren = zoneSpawnSprite.GetComponentsInChildren<SpriteClickable>().OrderBy(child => child.spriteID).ToArray();
 
             // Réorganiser les enfants dans la hiérarchie
-            for (int i = 0; i < sortedChildren.Length; i++)
+            for (int i = 1; i <= sortedChildren.Length; i++)
             {
-                sortedChildren[i].transform.SetSiblingIndex(i);
+                sortedChildren[i-1].transform.SetSiblingIndex(i);
             }
+
+        spriteRecherche.transform.SetSiblingIndex(Mathf.CeilToInt(GenerateExponentialRandom(20/(score+1)) * sortedChildren.Length));
     }
 
     private void DestroyAllSprites(Transform exception = null)
@@ -298,7 +299,8 @@ public class GameManager : MonoBehaviour
     float GenerateExponentialRandom(float lambda)
     {
         float u = Random.value; // Génère un nombre aléatoire uniforme entre 0 et 1
-        return -Mathf.Log(1 - u) / lambda; // Transformation pour obtenir une distribution exponentielle inverse
+        float result = 1 - Mathf.Exp(-u/lambda); // Appliquer ta fonction avec la nouvelle abscisse
+        return result;
     }
 
 

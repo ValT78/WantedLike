@@ -155,6 +155,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1277316198 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8122543741720256069, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+  m_PrefabInstance: {fileID: 1233080140877101778}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184371ef3f9612b4d966b4d29dd52509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1379593544 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1511803631948312419, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
@@ -176,6 +187,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3886820473882698849, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
   m_PrefabInstance: {fileID: 1233080140877101778}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2067717256 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7563044626859365267, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+  m_PrefabInstance: {fileID: 1233080140877101778}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067717253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb2b7ed4dbf3c74fbfe61bdbe1aa2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1233080140877101778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,13 +284,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1229848305}
     - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
+      propertyPath: scoreDisplay
+      value: 
+      objectReference: {fileID: 1379593544}
+    - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
       propertyPath: blinkingScore
       value: 
       objectReference: {fileID: 2067717253}
     - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
+      propertyPath: chronoAnimator
+      value: 
+      objectReference: {fileID: 1277316198}
+    - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
       propertyPath: zoneSpawnSprite
       value: 
       objectReference: {fileID: 1452400791}
+    - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
+      propertyPath: finalBlinkingScore
+      value: 
+      objectReference: {fileID: 2067717256}
     - target: {fileID: 6792857779586659348, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -312,6 +346,18 @@ PrefabInstance:
     - target: {fileID: 7929211953259660175, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219204280087089608, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
+      propertyPath: thirdDifficulty
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219204280087089608, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
+      propertyPath: fourthDifficulty
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219204280087089608, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
+      propertyPath: secondDifficulty
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

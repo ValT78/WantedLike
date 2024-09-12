@@ -11,11 +11,13 @@ public class SpawnSpriteManager : MonoBehaviour
     [SerializeField] private int firstDifficulty;
     [SerializeField] private int secondDifficulty;
     [SerializeField] private int thirdDifficulty;
+    [SerializeField] private int fourthDifficulty;
 
     [Header("ParametersLists")]
     [SerializeField] private List<Color> chooseColors;
     [SerializeField] private List<float> chooseRotations;
-    [SerializeField] private List<Vector3> chooseMovements;
+    [SerializeField] private List<float> chooseRotationSpeeds;
+
     [SerializeField] private List<float> chooseScale;
 
 
@@ -25,19 +27,18 @@ public class SpawnSpriteManager : MonoBehaviour
     private List<float> selectedRotations;
     private List<Vector3> selectedMovements;
     private List<float> selectedScale;
+    private List<float> selectedRotationSpeeds;
 
 
     private Color selectedTargetColor;
     private float selectedTargetRotation;
-    private Vector3 selectedTargetMovement;
-    private float selectedTargetScale;
 
     private void Awake()
     {
-        chooseColors = new List<Color> { Color.red, Color.blue, Color.green, Color.yellow, Color.magenta, Color.cyan };
+        chooseColors = new List<Color> { Color.red, Color.blue, Color.green, Color.magenta};
         chooseRotations = new List<float> { 0, 180, 90, 270, 45, 315, 225, 135 };
-        chooseMovements = new List<Vector3> { Vector3.zero, Vector3.up, Vector3.down, Vector3.left, Vector3.right };
-        chooseScale = new List<float> { 0.5f, 1f, 1.5f, 2f };
+        chooseScale = new List<float> { 1.3f, 0.8f, 1.6f, 0.6f, 1.9f, 0.4f, 2.2f };
+        chooseRotationSpeeds = new List<float> { 45f, -45f, 90f, -90f, 135f, -135f, 180f, -180f, 225f, -225f, 270f, -270f, 315f, -315f };
 
     }
 
@@ -47,21 +48,29 @@ public class SpawnSpriteManager : MonoBehaviour
 
     }
 
-
+    
     public void ChooseTransformation(int score)
     {
-        print(score);
-        if (score==0 || score % roundBatches == 0)
+        if (score==0 || roundBatches==0 || score % roundBatches == 0)
         {
+            selectedColors = new List<Color> { Color.white};
+            selectedRotations = new List<float> { 0f };
+            selectedScale = new List<float> { 1f };
+            selectedRotationSpeeds = new List<float> { 0f };
 
-            selectedColors = new List<Color>();
-            selectedRotations = new List<float>();
             selectedMovements = new List<Vector3> { Vector3.zero };
-            selectedScale = new List<float>();
+            selectedTargetColor = Color.white;
+            selectedTargetRotation = 0f;
+
+
 
             //Penser à rajouter du random sur le nombre de fonctions à exécuter
             int numberOfFunctionsToExecute = 0;
-            if (score > thirdDifficulty)
+            if(score > fourthDifficulty)
+            {
+                numberOfFunctionsToExecute = Random.Range(0, 5);
+            }
+            else if (score > thirdDifficulty)
             {
                 numberOfFunctionsToExecute = Random.Range(0, 4);
             }
@@ -80,8 +89,6 @@ public class SpawnSpriteManager : MonoBehaviour
             List<float> weights = new() { 1f, 1f, 1f, 1f };
 
             numberOfFunctionsToExecute = Mathf.Clamp(numberOfFunctionsToExecute, 0, functions.Count);
-
-
 
             List<int> selectedIndices = new();
             List<float> cumulativeWeights = new();
@@ -147,24 +154,17 @@ public class SpawnSpriteManager : MonoBehaviour
             selectedColors.Add(randomColor);
         }
 
-        if(Random.value<GenerateExponentialRandom(30/score))
-        {
-            selectedTargetColor = Color.white;
-        }
-        else
+        if(Random.value<GenerateExponentialRandom(10f/score))
         {
             selectedTargetColor = selectedColors[Random.Range(0, selectedColors.Count)];
         }
-
-
-
     }
 
     public void ChooseRotations(int score)
     {
-        int numberOfRotations = Mathf.Clamp(1+ score / 15, 0, 5);
+        int numberOfRotations = Mathf.Clamp(1+ score / 15, 0, 1 + chooseRotations.Count/2);
         selectedRotations = new List<float>();
-        if(numberOfRotations == 5)
+        if(numberOfRotations == 1 + chooseRotations.Count / 2)
         {
             //Générer 8 valeurs d'angles aléatoires
             for (int i = 0; i < 8; i++)
@@ -186,7 +186,7 @@ public class SpawnSpriteManager : MonoBehaviour
         }
         
 
-        if (Random.value < GenerateExponentialRandom(30 / score))
+        if (Random.value < GenerateExponentialRandom(15f / score))
         {
             selectedTargetRotation = 0f;
         }
@@ -194,43 +194,83 @@ public class SpawnSpriteManager : MonoBehaviour
         {
             selectedTargetRotation = selectedRotations[Random.Range(0, selectedRotations.Count)];
         }
+        if(Random.value < GenerateExponentialRandom(30f / score))
+        {
+            ChooseRotationSpeed(score);
+        }
         
+    }
+
+    private void ChooseRotationSpeed(int score)
+    {
+        int numberOfRotationSpeeds = Mathf.Clamp(1 + score / 15, 0, chooseRotationSpeeds.Count);
+        selectedRotationSpeeds = new List<float>();
+        for(int i = 0; i < numberOfRotationSpeeds; i++)
+        {
+            selectedRotationSpeeds.Add(chooseRotationSpeeds[i]);
+        }
+        numberOfRotationSpeeds = Random.Range(1, numberOfRotationSpeeds + 1);
+        for (int i = 0; i < selectedRotationSpeeds.Count - numberOfRotationSpeeds; i++)
+        {
+            selectedRotationSpeeds.Remove(selectedRotationSpeeds[Random.Range(0, selectedRotationSpeeds.Count)]);
+        }
     }
 
     public void ChooseMovements(int score)
     {
-        selectedMovements = new List<Vector3> {Vector3.up, Vector3.down, Vector3.left, Vector3.right };
-        selectedTargetMovement = selectedMovements[Random.Range(0, selectedMovements.Count)];
+        int numberOfRotationSpeeds = Mathf.Clamp(1 + score / 20, 0, chooseRotationSpeeds.Count);
+
+        //Générer numberOfRotationSpeeds valeurs de mouvement uniformément réparties sur un cercle
+        selectedMovements = new List<Vector3>();
+        for (int i = 0; i < numberOfRotationSpeeds; i++)
+        {
+            float angle = 360f / numberOfRotationSpeeds * i;
+            selectedMovements.Add(new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad), 0));
+        }
+
     }
 
     public void ChooseScale(int score)
     {
-        selectedScale = new List<float> { 0.5f, 1f, 1.5f, 2f };
-        selectedTargetScale = selectedScale[Random.Range(0, selectedScale.Count)];
+        int numberOfScales = Mathf.Clamp(1 + score / 20, 0, chooseScale.Count);
+        selectedScale = new List<float>();
+        for (int i = 0; i < numberOfScales; i++)
+        {
+            selectedScale.Add(chooseScale[i]);
+        }
+        numberOfScales = Random.Range(1, numberOfScales + 1);
+        for (int i = 0; i < selectedScale.Count - numberOfScales; i++)
+        {
+            selectedScale.Remove(selectedScale[Random.Range(0, selectedScale.Count)]);
+        }
     }
 
 
-    public Color GetRandomColor()
+    private Color GetRandomColor()
     {
         return selectedColors[Random.Range(0, selectedColors.Count)];
     }
 
-    public float GetRandomRotation()
+    private float GetRandomRotation()
     {
         return selectedRotations[Random.Range(0, selectedRotations.Count)];
     }
 
-    public Vector3 GetRandomMovement()
+    private Vector3 GetRandomMovement()
     {
         return selectedMovements[Random.Range(0, selectedMovements.Count)];
     }
 
-    public float GetRandomScale()
+    private float GetRandomScale()
     {
         return selectedScale[Random.Range(0, selectedScale.Count)];
     }
+    private float GetRandomRotationSpeed()
+    {
+        return selectedRotationSpeeds[Random.Range(0, selectedRotationSpeeds.Count)];
+    }
 
-    public void ApplyTransformations(GameObject spriteObject, bool isTarget, int spriteIndex) {
+    public void ApplyTransformations(GameObject spriteObject, bool isTarget, int spriteIndex, int score) {
         spriteObject.transform.SetParent(zoneSpawnSprite);
         spriteObject.GetComponent<RectTransform>().localScale = Vector3.one;
 
@@ -252,37 +292,60 @@ public class SpawnSpriteManager : MonoBehaviour
             isSinusoidal = true;
         }
 
+        bool sameSpeed = false;
+        float speed = Random.Range(50, 51+score*2);
+        if (Random.Range(0, 2) == 0)
+        {
+            sameSpeed = true;
+        }
+
+        bool sameSinusoidal = false;
+        float amplitude = Random.Range(2, 2.1f + score / 6f);
+        float frequency = Random.Range(2f, 2.1f + score / 4f);
+        if (Random.Range(0, 2) == 0)
+        {
+            sameSinusoidal = true;
+        }
+
         if (isTarget)
         {
-            if (selectedColors.Count != 0)
-            {
-                spriteObject.GetComponent<Image>().color = selectedTargetColor;
-            }
-            if (selectedRotations.Count != 0)
-            {
-                spriteObject.transform.Rotate(Vector3.forward, selectedTargetRotation);
-            }
-            spriteObject.GetComponent<SpriteClickable>().Initialized(spriteIndex, selectedTargetMovement, 100, isBouncing, isSinusoidal, 4, 8);
-            if (selectedScale.Count != 0)
-            {
-                spriteObject.GetComponent<RectTransform>().localScale = new Vector3(selectedTargetScale, selectedTargetScale, 1);
-            }
+            spriteObject.GetComponent<Image>().color = selectedTargetColor;
+            
+            spriteObject.transform.Rotate(Vector3.forward, selectedTargetRotation);
+            
+            spriteObject.GetComponent<SpriteClickable>().Initialized(
+                spriteIndex, 
+                GetRandomMovement(),
+                sameSpeed ? speed : Random.Range(50, 51 + score * 2), 
+                isBouncing, 
+                isSinusoidal, 
+                sameSinusoidal ? amplitude : Random.Range(2, 2.1f + score / 6f),
+                sameSinusoidal ? frequency : Random.Range(2f, 2.1f + score / 4f),
+                GetRandomRotationSpeed()
+            );
+            float scale = GetRandomScale();
+            spriteObject.GetComponent<RectTransform>().localScale = new Vector3(scale, scale, 1);
+            
         }
         else
         {
-            if (selectedColors.Count != 0)
-            {
-                spriteObject.GetComponent<Image>().color = GetRandomColor();
-            }
-            if (selectedRotations.Count != 0)
-            {
-                spriteObject.GetComponent<RectTransform>().localRotation *= Quaternion.Euler(0, 0, GetRandomRotation());
-            }
-            spriteObject.GetComponent<SpriteClickable>().Initialized(spriteIndex, GetRandomMovement(), 100, isBouncing, isSinusoidal,4, 8);
-            if (selectedScale.Count != 0)
-            {
-                spriteObject.GetComponent<RectTransform>().localScale = new Vector3(selectedTargetScale, selectedTargetScale, 1);
-            }
+            spriteObject.GetComponent<Image>().color = GetRandomColor();
+            
+            spriteObject.GetComponent<RectTransform>().localRotation *= Quaternion.Euler(0, 0, GetRandomRotation());
+            
+            spriteObject.GetComponent<SpriteClickable>().Initialized(
+                spriteIndex, 
+                GetRandomMovement(),
+                sameSpeed ? speed : Random.Range(50, 51 + score * 2),
+                isBouncing, 
+                isSinusoidal,
+                sameSinusoidal ? amplitude : Random.Range(2, 2.1f + score / 6f),
+                sameSinusoidal ? frequency : Random.Range(2f, 2.1f + score / 4f),
+                GetRandomRotationSpeed()
+            );
+            float scale = GetRandomScale();
+            spriteObject.GetComponent<RectTransform>().localScale = new Vector3(scale, scale, 1);
+            
         }
 
 
@@ -291,7 +354,7 @@ public class SpawnSpriteManager : MonoBehaviour
     float GenerateExponentialRandom(float lambda)
     {
         float u = Random.value; // Génère un nombre aléatoire uniforme entre 0 et 1
-        float result = 1 - Mathf.Exp(-u / lambda); // Appliquer ta fonction avec la nouvelle abscisse
+        float result = Mathf.Exp(-u / lambda); // Appliquer ta fonction avec la nouvelle abscisse
         return result;
     }
 

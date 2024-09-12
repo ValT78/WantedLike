@@ -1,0 +1,50 @@
+  488  ls
+  489  git add *
+  490  git commit -m "remove old one"
+  491  git pull
+  492  git push
+  493  git rm *
+  494  git commit -m "remove old one"
+  495  git push
+  496  git rm *
+  497  git rm -r *
+  498  git rm *
+  499  git rm .
+  500  git -r rm *
+  501  cd d:
+  502  cd UnityProject/WantedLike/
+  503  ls
+  504  git log
+  505  git checkout 30237b486287af04e781e8c0b32dc90d7b56d5d0
+  506  git checkout a6c281fed1a949d565ae4eb36160a5e0a8b81f55
+  507  git checkout a30237b486287af04e781e8c0b32dc90d7b56d5d0
+  508  git checkout 30237b486287af04e781e8c0b32dc90d7b56d5d0
+  509  git log --oneline -- Assets/Script/GameManager.cs
+  510  git stash list
+  511  git stash list
+  512  git reflog
+  513  git reset --soft HEAD@{5}
+  514  git reset --soft HEAD@{5}
+  515  git reset --soft HEAD@{5}
+  516  git reflog
+  517  git reset --soft HEAD@{5}
+  518  git reflog
+  519  git reset --soft HEAD@{6}
+  520  git log
+  521  git reflog
+  522  git reset --soft HEAD@{6}
+  523  git log
+  524  git reflog
+  525  git reset --soft HEAD@{8}
+  526  git log
+  527  git reflog
+  528  git stash list
+  529  git stash list
+  530  git log
+  531  git reflog
+  532  git reset --soft HEAD@{8}
+  533  git stash list
+  534  git stash
+  535  git stash list
+  536  git stash log
+  537  history | tail -n 50 > last_50_history.txt

@@ -13,6 +13,7 @@ public class SpriteClickable : MonoBehaviour
     public float frequency; // Fréquence de l'oscillation
     public float amplitude; // Amplitude de l'oscillation
     private float time; // Temps écoulé
+    private float rotationSpeed; // Vitesse de rotation
 
     [SerializeField] private RectTransform rectTransform;
     private RectTransform zoneSpawnSprite;
@@ -28,7 +29,7 @@ public class SpriteClickable : MonoBehaviour
         MoveSprite();
     }
 
-    public void Initialized(int spriteID, Vector2 direction, float speed, bool bounceOnEdges, bool isSinusoidal, float amplitude, float frequency)
+    public void Initialized(int spriteID, Vector2 direction, float speed, bool bounceOnEdges, bool isSinusoidal, float amplitude, float frequency, float rotationSpeed)
     {
         this.spriteID = spriteID;
         this.direction = direction;
@@ -37,6 +38,7 @@ public class SpriteClickable : MonoBehaviour
         this.isSinusoidal = isSinusoidal;
         this.amplitude = amplitude;
         this.frequency = frequency;
+        this.rotationSpeed = rotationSpeed;
     }
 
     
@@ -46,6 +48,10 @@ public class SpriteClickable : MonoBehaviour
 
         // Calcul de la nouvelle position avec oscillation sinusoïdale
         Vector3 newPosition = rectTransform.localPosition + speed * Time.deltaTime * (Vector3)direction;
+
+        //Tourner le sprite autour de lui même à une certaine vitesse
+        rectTransform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+
         if (isSinusoidal)
         {
             // Calcul du vecteur perpendiculaire à la direction

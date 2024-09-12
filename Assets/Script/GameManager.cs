@@ -35,8 +35,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int score;
 
     [Header("Animations")]
-    [SerializeField] private float blinkSpeedWrongTarget = 10; // Blinks per second
-    [SerializeField] private float blinkNumberWrongTarget = 10; // Total number of blinks
+    [SerializeField] private float blinkSpeedWrongTarget; // Blinks per second
+    [SerializeField] private float blinkNumberWrongTarget; // Total number of blinks
 
     [Header("Chrono")]
     [SerializeField] private FloatingTime bonusChronoPrefab;
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         affiche.sprite = sprites[index];
 
         DestroyAllSprites(); // Détruire tous les sprites générés
-        nombreDeSprites = (int)(5 * Mathf.Log(score / 3 + 1.6f, 2));
+        nombreDeSprites = (int)(7 * Mathf.Log(score / 1f + 1.4f, 2));
         // Sélectionner les transformations
         spawnSpriteManager.ChooseTransformation(score);
 
@@ -156,13 +156,14 @@ public class GameManager : MonoBehaviour
             }
         }
         spriteObject.GetComponent<Image>().sprite = sprites[spriteIndex];
+        spriteObject.GetComponent<Image>().preserveAspect = true;
         if (spriteIndex == spriteRechercheID)
         {
-            spawnSpriteManager.ApplyTransformations(spriteObject, true, spriteIndex);
+            spawnSpriteManager.ApplyTransformations(spriteObject, true, spriteIndex, score);
         }
         else
         {
-            spawnSpriteManager.ApplyTransformations(spriteObject, false, spriteIndex);
+            spawnSpriteManager.ApplyTransformations(spriteObject, false, spriteIndex, score);
         }
         return spriteObject;
 
@@ -247,7 +248,7 @@ public class GameManager : MonoBehaviour
             sortedChildren[i-1].transform.SetSiblingIndex(i);
         }
 
-        spriteRecherche.transform.SetSiblingIndex(Mathf.CeilToInt(GenerateExponentialRandom(20/(score+1)) * sortedChildren.Length));
+        spriteRecherche.transform.SetSiblingIndex(Mathf.CeilToInt(GenerateExponentialRandom(10f/(score+1)) * sortedChildren.Length));
     }
 
     private void DestroyAllSprites(Transform exception = null)
@@ -293,7 +294,7 @@ public class GameManager : MonoBehaviour
     float GenerateExponentialRandom(float lambda)
     {
         float u = Random.value; // Génère un nombre aléatoire uniforme entre 0 et 1
-        float result = 1 - Mathf.Exp(-u/lambda); // Appliquer ta fonction avec la nouvelle abscisse
+        float result = Mathf.Exp(-u/lambda); // Appliquer ta fonction avec la nouvelle abscisse
         return result;
     }
 }

@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
 public class GameManager : MonoBehaviour
@@ -19,7 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private SpawnSpriteManager spawnSpriteManager;
     [SerializeField] private Sprite[] sprites; // Tableau de sprites des objets recherchables
     public RectTransform zoneSpawnSprite; // Transform de la zone où les sprites seront générés
-
 
     [Header("Affiche")]
     public Image affiche; // SpriteRenderer où le sprite à rechercher sera affiché
@@ -173,18 +171,8 @@ public class GameManager : MonoBehaviour
 
     public bool OnSpriteClicked(int clickedSpriteID)
     {
-        if (clickedSpriteID == spriteRechercheID)
-        {
-            return true;
-            
-        }
-        else
-        {
-            return false;
-        }
+        return clickedSpriteID == spriteRechercheID;
     }
-
-    
 
     private void DetectClicOnScreen()
     {
@@ -250,15 +238,14 @@ public class GameManager : MonoBehaviour
 
     private void SortSpriteById()
     {
+        // Trier les enfants par spriteID
+        var sortedChildren = zoneSpawnSprite.GetComponentsInChildren<SpriteClickable>().OrderBy(child => child.spriteID).ToArray();
 
-            // Trier les enfants par spriteID
-            var sortedChildren = zoneSpawnSprite.GetComponentsInChildren<SpriteClickable>().OrderBy(child => child.spriteID).ToArray();
-
-            // Réorganiser les enfants dans la hiérarchie
-            for (int i = 1; i <= sortedChildren.Length; i++)
-            {
-                sortedChildren[i-1].transform.SetSiblingIndex(i);
-            }
+        // Réorganiser les enfants dans la hiérarchie
+        for (int i = 1; i <= sortedChildren.Length; i++)
+        {
+            sortedChildren[i-1].transform.SetSiblingIndex(i);
+        }
 
         spriteRecherche.transform.SetSiblingIndex(Mathf.CeilToInt(GenerateExponentialRandom(20/(score+1)) * sortedChildren.Length));
     }
@@ -283,7 +270,6 @@ public class GameManager : MonoBehaviour
 
     private void UpdateChrono()
     {
-        
         chrono -= Time.deltaTime;
         chronoText.text = Mathf.Round(chrono).ToString();
         if (chrono <= 0)
@@ -308,6 +294,4 @@ public class GameManager : MonoBehaviour
         float result = 1 - Mathf.Exp(-u/lambda); // Appliquer ta fonction avec la nouvelle abscisse
         return result;
     }
-
-
 }

@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
 
     [Header("EndGame")]
     [SerializeField] private GameObject gameOverText;
-    [SerializeField] private GameObject finalBlinkingScore;
+    [SerializeField] private ScoreAnimator finalBlinkingScore;
     private bool isGameOver;
 
     private void Awake()
@@ -78,14 +78,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
         DetectClicOnScreen();
 
         if(!isGameOver && !displayAnimation)
         {
             UpdateChrono();
         }
-
     }
 
     private IEnumerator FindTargetSprite(SpriteClickable target)
@@ -221,7 +219,7 @@ public class GameManager : MonoBehaviour
                     chronoInstance.Initialized(true, normalizedTouchPosition);
 
                     StartCoroutine(Instantiate(bdaPointPrefab, Camera.main.ScreenToWorldPoint(touchPosition), Quaternion.identity).GetComponent<HyperbolicTrajectory>().MoveObject(scoreDisplay.transform.position + new Vector3(1f, 0f, 0f)));
-                    chronoAnimator.Animate((int)Mathf.Round(chrono), (int)Mathf.Round(Mathf.Min(chrono + chronoBonus, chronoMax)), .65f);
+                    chronoAnimator.AnimateBonus((int)Mathf.Ceil(chrono), (int)Mathf.Ceil(Mathf.Min(chrono + chronoBonus, chronoMax)), .65f);
                     chrono = Mathf.Min(chrono + chronoBonus, chronoMax);
                     StartCoroutine(FindTargetSprite(spriteClickable));
                 }
@@ -272,10 +270,14 @@ public class GameManager : MonoBehaviour
 
     private void UpdateChrono()
     {
+        int oldInteger = Mathf.CeilToInt(chrono);
         chrono -= Time.deltaTime;
-        chronoText.text = Mathf.Round(chrono).ToString();
+        bool tick = Mathf.CeilToInt(chrono) != oldInteger;
+        chronoAnimator.UpdateTime(chrono, tick);
+
         if (chrono <= 0)
         {
+            chrono = 0;
             GameOver();
         }
     }
@@ -283,9 +285,7 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         isGameOver = true;
-        chrono = 0;
-        chronoText.GetComponent<TextMeshProUGUI>().text = "0";
-        finalBlinkingScore.GetComponent<ScoreAnimator>().BlinkText("Final Score : " + score + "\nPress to Continue");
+        finalBlinkingScore.BlinkText("Final Score : " + score + "\nPress to Continue");
         Instantiate(gameOverText);
         DestroyAllSprites();
     }

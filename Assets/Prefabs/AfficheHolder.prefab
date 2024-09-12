@@ -337,6 +337,7 @@ GameObject:
   - component: {fileID: 5067158560654560093}
   - component: {fileID: 5538998217570555116}
   - component: {fileID: 8122543741720256069}
+  - component: {fileID: 2170300897161833937}
   - component: {fileID: 7357562149035610039}
   m_Layer: 5
   m_Name: timer
@@ -390,6 +391,23 @@ MonoBehaviour:
   delayBeforeAdding: 0
   delayAfterAdding: 0
   chronoText: {fileID: 7357562149035610039}
+  pulseAnimation: {fileID: 2170300897161833937}
+--- !u!114 &2170300897161833937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627996023230613496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09c15fa48df9b334bb3faec3da7772d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logoTransform: {fileID: 5067158560654560093}
+  growthOnPulse: 0.1
+  pulseDuration: 0.5
+  useCachedDeltaTime: 0
 --- !u!114 &7357562149035610039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,8 +582,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6756502035855410143}
   - component: {fileID: 7497296931204793306}
-  - component: {fileID: 7656560922943927419}
   - component: {fileID: 7563044626859365267}
+  - component: {fileID: 7656560922943927419}
   m_Layer: 5
   m_Name: FinalText
   m_TagString: Untagged
@@ -600,6 +618,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3886820473882698849}
   m_CullTransparentMesh: 1
+--- !u!114 &7563044626859365267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886820473882698849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb2b7ed4dbf3c74fbfe61bdbe1aa2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textScore: {fileID: 7656560922943927419}
+  blinkInterval: 0.8
+  logoTransform: {fileID: 6756502035855410143}
+  growthOnPulse: 0.2
+  pulseDuration: 0.7
+  useCachedDeltaTime: 0
 --- !u!114 &7656560922943927419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -689,24 +725,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7563044626859365267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3886820473882698849}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcb2b7ed4dbf3c74fbfe61bdbe1aa2c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textScore: {fileID: 0}
-  blinkInterval: 0.8
-  logoTransform: {fileID: 0}
-  growthOnPulse: 0.2
-  pulseDuration: 0.7
-  useCachedDeltaTime: 0
 --- !u!1 &3914650880558016145
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class Menu : MonoBehaviour
     }
     public void LoadGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameJuice");
     }
 
     public void Leaderboard()

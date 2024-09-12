@@ -17,6 +17,8 @@ public class ChronoAnimator : MonoBehaviour
     [Header("References")]
     [SerializeField]
     private TextMeshProUGUI chronoText;
+    [SerializeField]
+    private PulseAnimation pulseAnimation;
 
     private float referenceScale;
 
@@ -25,8 +27,17 @@ public class ChronoAnimator : MonoBehaviour
         referenceScale = transform.localScale.x;
     }
 
-    public void Animate(int from, int to, float duration)
+    // Tick is true whenever the integer part of the time changes
+    public void UpdateTime(float time, bool tick)
     {
+        chronoText.text = Mathf.Ceil(time).ToString();
+        if (tick && time > 0)
+            pulseAnimation.Pulse(10/time);
+    }
+
+    public void AnimateBonus(int from, int to, float duration)
+    {
+        pulseAnimation.StopAllCoroutines();
         StartCoroutine(GrowAndAdd(duration, from, to));
     }
 

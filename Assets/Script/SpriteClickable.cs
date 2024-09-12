@@ -24,7 +24,7 @@ public class SpriteClickable : MonoBehaviour
         zoneSpawnSprite = GameManager.Instance.zoneSpawnSprite;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         MoveSprite();
     }

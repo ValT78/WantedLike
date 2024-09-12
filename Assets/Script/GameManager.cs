@@ -22,21 +22,19 @@ public class GameManager : MonoBehaviour
     [Header("Affiche")]
     public Image affiche; // SpriteRenderer où le sprite à rechercher sera affiché
     private int spriteRechercheID; // L'ID du sprite à rechercher
-    private GameObject spriteRecherche; // Le sprite à rechercher
+    private List<GameObject> spriteRecherches; // Le sprite à rechercher
+    [SerializeField] private ScoreAnimator howManySpriteText;
 
     [Header("Detect clic")]
     [SerializeField] private Canvas canvas;
     private GraphicRaycaster raycaster;
     private EventSystem eventSystem;
+    [HideInInspector] public int howManySpriteToFind;
 
     [Header("Score")]
     [SerializeField] private ScoreAnimator scoreDisplay;
     [SerializeField] private GameObject bdaPointPrefab;
     [HideInInspector] public int score;
-
-    [Header("Animations")]
-    [SerializeField] private float blinkSpeedWrongTarget; // Blinks per second
-    [SerializeField] private float blinkNumberWrongTarget; // Total number of blinks
 
     [Header("Chrono")]
     [SerializeField] private FloatingTime bonusChronoPrefab;
@@ -95,13 +93,13 @@ public class GameManager : MonoBehaviour
         LaunchNewRound();
     }
 
-    private IEnumerator MissedTarget(SpriteClickable target)
+    private IEnumerator BlinkSprite(SpriteClickable target, int blickNumber, float blinkTime)
     {
         Image image = target.GetComponent<Image>();
         Color color = image.color;
 
         // Faire clignoter le sprite manqué de invisible à visible sans retirer l'ancienne couleur
-        for (int i = 0; i < blinkNumberWrongTarget*2; i++)
+        for (int i = 0; i < blickNumber; i++)
         {
             color.a = i % 2 == 0 ? 0 : 1;
 
@@ -109,14 +107,8 @@ public class GameManager : MonoBehaviour
                 yield break;
 
             image.color = color;
-            yield return new WaitForSeconds(1 / blinkSpeedWrongTarget);
+            yield return new WaitForSeconds(blinkTime);
         }
-
-        if (!image)
-            yield break;
-
-        color.a = 1;
-        image.color = color;
     }
 
     private void LaunchNewRound()
@@ -130,11 +122,22 @@ public class GameManager : MonoBehaviour
 
         DestroyAllSprites(); // Détruire tous les sprites générés
         nombreDeSprites = (int)(7 * Mathf.Log(score / 1f + 1.4f, 2));
+
         // Sélectionner les transformations
+        howManySpriteToFind = 1;
         spawnSpriteManager.ChooseTransformation(score);
+        howManySpriteText.BlinkText("x" + howManySpriteToFind, 5);
 
         // Ajouter le sprite recherché parmi les sprites générés
-        spriteRecherche = SummonSprite(index);
+        spriteRecherches = new();
+        for (int i = 0; i < howManySpriteToFind; i++) // Générer un sprite de moins
+        {
+            spriteRecherches.Add(SummonSprite(index));
+        }
+        if(howManySpriteToFind > 1)
+        {
+            howManySpriteText.BlinkText("x" + howManySpriteToFind, 4);
+        }
 
         // Générer les nouveaux sprites
         for (int i = 0; i < nombreDeSprites - 1; i++) // Générer un sprite de moins
@@ -215,22 +218,33 @@ public class GameManager : MonoBehaviour
                 spriteClickable.isClicked = true;
                 if (isTargetClicked)
                 {
-                    UpdateScore();
-                    FloatingTime chronoInstance = Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform);
-                    chronoInstance.Initialized(true, normalizedTouchPosition);
+                    howManySpriteToFind--;
+                    if (howManySpriteToFind < 1)
+                    {
+                        UpdateScore();
+                        Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized(true, normalizedTouchPosition);
 
-                    StartCoroutine(Instantiate(bdaPointPrefab, Camera.main.ScreenToWorldPoint(touchPosition), Quaternion.identity).GetComponent<HyperbolicTrajectory>().MoveObject(scoreDisplay.transform.position + new Vector3(1f, 0f, 0f)));
-                    chronoAnimator.AnimateBonus((int)Mathf.Ceil(chrono), (int)Mathf.Ceil(Mathf.Min(chrono + chronoBonus, chronoMax)), .65f);
-                    chrono = Mathf.Min(chrono + chronoBonus, chronoMax);
-                    StartCoroutine(FindTargetSprite(spriteClickable));
+                        StartCoroutine(Instantiate(bdaPointPrefab, Camera.main.ScreenToWorldPoint(touchPosition), Quaternion.identity).GetComponent<HyperbolicTrajectory>().MoveObject(scoreDisplay.transform.position + new Vector3(1f, 0f, 0f)));
+                        chronoAnimator.AnimateBonus((int)Mathf.Ceil(chrono), (int)Mathf.Ceil(Mathf.Min(chrono + chronoBonus, chronoMax)), .65f);
+                        chrono = Mathf.Min(chrono + chronoBonus, chronoMax);
+                        StartCoroutine(FindTargetSprite(spriteClickable));
+                        howManySpriteText.BlinkText("x" + howManySpriteToFind, 3);
+
+                    }
+                    else
+                    {
+                        Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized(true, normalizedTouchPosition);
+                        chrono = Mathf.Min(chrono + chronoBonus, chronoMax);
+                        StartCoroutine(BlinkSprite(spriteClickable, 7, 0.1f));
+                        howManySpriteText.BlinkText("x" + howManySpriteToFind, 4);
+
+                    }
                 }
                 else
                 {
-                    FloatingTime chronoInstance = Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform);
-                    chronoInstance.Initialized(false, normalizedTouchPosition);
-
+                    Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized(false, normalizedTouchPosition);
+                    StartCoroutine(BlinkSprite(spriteClickable, 7, 0.3f));
                     chrono = Mathf.Max(chrono - chronoMalus, 0);
-                    StartCoroutine(MissedTarget(spriteClickable));
                 }
             }
             
@@ -247,8 +261,10 @@ public class GameManager : MonoBehaviour
         {
             sortedChildren[i-1].transform.SetSiblingIndex(i);
         }
-
-        spriteRecherche.transform.SetSiblingIndex(Mathf.CeilToInt(GenerateExponentialRandom(10f/(score+1)) * sortedChildren.Length));
+        for(int i = 0; i < spriteRecherches.Count; i++)
+        {
+            spriteRecherches[i].transform.SetSiblingIndex(Mathf.CeilToInt(GenerateExponentialRandom(10f / (score + 1)) * sortedChildren.Length));
+        }
     }
 
     private void DestroyAllSprites(Transform exception = null)

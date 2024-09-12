@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &323068624 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2381263705107859150, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+  m_PrefabInstance: {fileID: 1233080140877101778}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb2b7ed4dbf3c74fbfe61bdbe1aa2c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &508497233 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1836329234226963299, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
@@ -254,6 +265,50 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -240.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 563.37836
+      objectReference: {fileID: 0}
+    - target: {fileID: 6095155042416670501, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.1901855
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -299,6 +354,10 @@ PrefabInstance:
       propertyPath: zoneSpawnSprite
       value: 
       objectReference: {fileID: 1452400791}
+    - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
+      propertyPath: howManySpriteText
+      value: 
+      objectReference: {fileID: 323068624}
     - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
       propertyPath: finalBlinkingScore
       value: 

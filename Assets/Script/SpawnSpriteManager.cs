@@ -77,12 +77,9 @@ public class SpawnSpriteManager : MonoBehaviour
                 numberOfFunctionsToExecute = Random.Range(0, 2);
             }
 
-            List<string> functions = new() { "ChooseColors", "ChooseRotations", "ChooseMovements", "ChooseScale" };
-
             // Coefficients de pondération pour chaque fonction
-            List<float> weights = new() { 1f, 1f, 1f, 1f };
+            List<float> weights = new() { 3f, 3f, 3f, 3f, 1f };
 
-            numberOfFunctionsToExecute = Mathf.Clamp(numberOfFunctionsToExecute, 0, functions.Count);
 
             List<int> selectedIndices = new();
             List<float> cumulativeWeights = new();
@@ -128,9 +125,22 @@ public class SpawnSpriteManager : MonoBehaviour
                     case 3:
                         ChooseScale(score);
                         break;
+                    case 4:
+                        HowManySpriteToFind(score);
+                        break;
                 }
             }
         }
+    }
+
+    private void HowManySpriteToFind(int score)
+    {
+        int numberToFind = 1 + score / 50;
+        if(numberToFind > 1)
+        {
+            numberToFind = Random.Range(2, numberToFind + 1);
+        }
+        GameManager.Instance.howManySpriteToFind = numberToFind < 5 ? numberToFind : 4;
     }
 
     public void ChooseColors(int score)
@@ -148,10 +158,8 @@ public class SpawnSpriteManager : MonoBehaviour
             selectedColors.Add(randomColor);
         }
 
-        if(Random.value>GenerateExponentialRandom(5f/score))
-        {
-            selectedTargetColor = selectedColors[Random.Range(0, selectedColors.Count)];
-        }
+        selectedTargetColor = selectedColors[Random.Range(0, selectedColors.Count)];
+        
     }
 
     public void ChooseRotations(int score)

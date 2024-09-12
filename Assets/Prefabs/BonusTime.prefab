@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3702997152648178804}
   - component: {fileID: 1452516336235568369}
   - component: {fileID: 6716756101435244121}
+  - component: {fileID: 3520588535754790062}
   m_Layer: 5
   m_Name: BonusTime
   m_TagString: Untagged
@@ -120,6 +121,18 @@ MonoBehaviour:
   isBonus: 0
   textMesh: {fileID: 8605329897787877005}
   rectTransform: {fileID: 8787247428287200097}
+--- !u!225 &3520588535754790062
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5084973140554824146}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6163970090719201258
 GameObject:
   m_ObjectHideFlags: 0

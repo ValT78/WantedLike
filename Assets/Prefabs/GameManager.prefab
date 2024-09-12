@@ -67,17 +67,19 @@ MonoBehaviour:
   zoneSpawnSprite: {fileID: 0}
   affiche: {fileID: 0}
   canvas: {fileID: 0}
-  scoreText: {fileID: 0}
+  scoreDisplay: {fileID: 0}
   bdaPointPrefab: {fileID: 2202628169334212215, guid: 89a648cedc9df824ea734e5529a31d52, type: 3}
   score: 0
-  bonusChronoPrefab: {fileID: 5084973140554824146, guid: a71caf3c902d6f240b47df4a52838ab4, type: 3}
+  blinkSpeedWrongTarget: 14
+  blinkNumberWrongTarget: 7
+  bonusChronoPrefab: {fileID: 3443458494889623286, guid: 8d8757d6514a5664a80981f4493ac408, type: 3}
   chronoInitial: 15
   chronoBonus: 3
   chronoMalus: 5
   chronoMax: 60
   chronoText: {fileID: 0}
   gameOverText: {fileID: 707039327519512450, guid: cef9690d92f6aff49990dd42ee7c4cbe, type: 3}
-  blinkingScore: {fileID: 0}
+  finalBlinkingScore: {fileID: 0}
 --- !u!114 &8219204280087089608
 MonoBehaviour:
   m_ObjectHideFlags: 0

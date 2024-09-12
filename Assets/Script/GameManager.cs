@@ -27,29 +27,32 @@ public class GameManager : MonoBehaviour
     private GameObject spriteRecherche; // Le sprite à rechercher
 
     [Header("Detect clic")]
-    [SerializeField] private Canvas canvas; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
+    [SerializeField] private Canvas canvas;
     private GraphicRaycaster raycaster;
     private EventSystem eventSystem;
 
     [Header("Score")]
-    [SerializeField] private ScoreAnimator scoreDisplay; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
-    [SerializeField] private GameObject bdaPointPrefab; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
+    [SerializeField] private ScoreAnimator scoreDisplay;
+    [SerializeField] private GameObject bdaPointPrefab;
     [HideInInspector] public int score;
 
+    [Header("Animations")]
+    [SerializeField] private float blinkSpeedWrongTarget = 10; // Blinks per second
+    [SerializeField] private float blinkNumberWrongTarget = 10; // Total number of blinks
 
     [Header("Chrono")]
-    [SerializeField] private GameObject bonusChronoPrefab;
+    [SerializeField] private FloatingTime bonusChronoPrefab;
     [SerializeField] private float chronoInitial;
     public float chronoBonus;
     public float chronoMalus;
     [SerializeField] private float chronoMax;
-    [SerializeField] private TextMeshProUGUI chronoText; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
+    [SerializeField] private TextMeshProUGUI chronoText;
     private float chrono;
     private bool displayAnimation;
 
     [Header("EndGame")]
-    [SerializeField] private GameObject gameOverText; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
-    [SerializeField] private GameObject finalBlinkingScore; // [SerializeField] pour que la variable soit visible dans l'éditeur [Unity
+    [SerializeField] private GameObject gameOverText;
+    [SerializeField] private GameObject finalBlinkingScore;
     private bool isGameOver;
 
     private void Awake()
@@ -100,25 +103,23 @@ public class GameManager : MonoBehaviour
         Image image = target.GetComponent<Image>();
         Color color = image.color;
 
-        //Faire clignoter le sprite manqué de invisible à visible sans retirer l'ancienne couleur
-        for (int i = 0; i < 6; i++)
+        // Faire clignoter le sprite manqué de invisible à visible sans retirer l'ancienne couleur
+        for (int i = 0; i < blinkNumberWrongTarget*2; i++)
         {
-            if(image == null)
-            {
-                break;
-            }
-            if (i % 2 == 0)
-            {
-                color.a = 0;
-            }
-            else
-            {
-                color.a = 1;
-            }
+            color.a = i % 2 == 0 ? 0 : 1;
+
+            if (!image)
+                yield break;
+
             image.color = color;
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(1 / blinkSpeedWrongTarget);
         }
 
+        if (!image)
+            yield break;
+
+        color.a = 1;
+        image.color = color;
     }
 
     private void LaunchNewRound()
@@ -227,14 +228,18 @@ public class GameManager : MonoBehaviour
                 if (isTargetClicked)
                 {
                     UpdateScore();
-                    Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity).GetComponent<FloatingText>().Initialized(true, normalizedTouchPosition);
+                    FloatingTime chronoInstance = Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform);
+                    chronoInstance.Initialized(true, normalizedTouchPosition);
+
                     StartCoroutine(Instantiate(bdaPointPrefab, Camera.main.ScreenToWorldPoint(touchPosition), Quaternion.identity).GetComponent<HyperbolicTrajectory>().MoveObject(scoreDisplay.transform.position + new Vector3(1f, 0f, 0f)));
                     chrono = Mathf.Min(chrono + chronoBonus, chronoMax);
                     StartCoroutine(FindTargetSprite(spriteClickable));
                 }
                 else
                 {
-                    Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity).GetComponent<FloatingText>().Initialized(false, normalizedTouchPosition);
+                    FloatingTime chronoInstance = Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform);
+                    chronoInstance.Initialized(false, normalizedTouchPosition);
+
                     chrono = Mathf.Max(chrono - chronoMalus, 0);
                     StartCoroutine(MissedTarget(spriteClickable));
                 }

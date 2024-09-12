@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SpawnSpriteManager : MonoBehaviour
 {
-    private RectTransform zoneSpawnSprite; // Transform de la zone où les sprites seront générés
+    [SerializeField] private RectTransform zoneSpawnSprite; // Transform de la zone où les sprites seront générés
 
     [Header("Difficulty rises")]
     [SerializeField] private int roundBatches;
@@ -39,12 +39,6 @@ public class SpawnSpriteManager : MonoBehaviour
         chooseRotations = new List<float> { 0, 180, 90, 270, 45, 315, 225, 135 };
         chooseScale = new List<float> { 1.3f, 0.8f, 1.6f, 0.6f, 1.9f, 0.4f, 2.2f };
         chooseRotationSpeeds = new List<float> { 45f, -45f, 90f, -90f, 135f, -135f, 180f, -180f, 225f, -225f, 270f, -270f, 315f, -315f };
-
-    }
-
-    private void Start()
-    {
-        zoneSpawnSprite = GameManager.Instance.zoneSpawnSprite;
 
     }
 
@@ -154,7 +148,7 @@ public class SpawnSpriteManager : MonoBehaviour
             selectedColors.Add(randomColor);
         }
 
-        if(Random.value<GenerateExponentialRandom(10f/score))
+        if(Random.value>GenerateExponentialRandom(5f/score))
         {
             selectedTargetColor = selectedColors[Random.Range(0, selectedColors.Count)];
         }
@@ -232,7 +226,7 @@ public class SpawnSpriteManager : MonoBehaviour
 
     public void ChooseScale(int score)
     {
-        int numberOfScales = Mathf.Clamp(1 + score / 20, 0, chooseScale.Count);
+        int numberOfScales = Mathf.Clamp(1 + score / 15, 0, chooseScale.Count);
         selectedScale = new List<float>();
         for (int i = 0; i < numberOfScales; i++)
         {
@@ -293,15 +287,15 @@ public class SpawnSpriteManager : MonoBehaviour
         }
 
         bool sameSpeed = false;
-        float speed = Random.Range(50, 51+score*2);
+        float speed = Random.Range(50, 51+score*4);
         if (Random.Range(0, 2) == 0)
         {
             sameSpeed = true;
         }
 
         bool sameSinusoidal = false;
-        float amplitude = Random.Range(2, 2.1f + score / 6f);
-        float frequency = Random.Range(2f, 2.1f + score / 4f);
+        float amplitude = Random.Range(2, 2.1f + score / 4f);
+        float frequency = Random.Range(1f, 1.1f + score / 6f);
         if (Random.Range(0, 2) == 0)
         {
             sameSinusoidal = true;

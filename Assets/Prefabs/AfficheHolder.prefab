@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logoTransform: {fileID: 5067158560654560093}
-  growthOnPulse: 0.1
+  growthOnPulse: 0.05
   pulseDuration: 0.5
   useCachedDeltaTime: 0
 --- !u!114 &7357562149035610039

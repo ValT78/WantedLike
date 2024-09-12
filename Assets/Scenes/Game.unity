@@ -348,9 +348,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8219204280087089608, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
+      propertyPath: roundBatches
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219204280087089608, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
       propertyPath: thirdDifficulty
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 8219204280087089608, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
+      propertyPath: zoneSpawnSprite
+      value: 
+      objectReference: {fileID: 1452400791}
     - target: {fileID: 8219204280087089608, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
       propertyPath: fourthDifficulty
       value: 60

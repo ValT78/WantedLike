@@ -232,11 +232,30 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5067158560654560093, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+--- !u!114 &1233080140877101779 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8122543741720256069, guid: 6c5be61aec633d54eb2918ec8250fe01, type: 3}
+  m_PrefabInstance: {fileID: 1233080140877101778}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184371ef3f9612b4d966b4d29dd52509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6207466808765283938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -254,10 +273,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 508497233}
     - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
-      propertyPath: scoreText
-      value: 
-      objectReference: {fileID: 1379593544}
-    - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
       propertyPath: chronoText
       value: 
       objectReference: {fileID: 1229848305}
@@ -266,9 +281,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1379593544}
     - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
-      propertyPath: blinkingScore
+      propertyPath: chronoAnimator
       value: 
-      objectReference: {fileID: 2067717253}
+      objectReference: {fileID: 1233080140877101779}
     - target: {fileID: 5242308852252644216, guid: 3752b6bd272fa034eba99cf676751d71, type: 3}
       propertyPath: zoneSpawnSprite
       value: 

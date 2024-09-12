@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public float chronoMalus;
     [SerializeField] private float chronoMax;
     [SerializeField] private TextMeshProUGUI chronoText;
+    [SerializeField] private ChronoAnimator chronoAnimator;
     private float chrono;
     private bool displayAnimation;
 
@@ -220,6 +221,7 @@ public class GameManager : MonoBehaviour
                     chronoInstance.Initialized(true, normalizedTouchPosition);
 
                     StartCoroutine(Instantiate(bdaPointPrefab, Camera.main.ScreenToWorldPoint(touchPosition), Quaternion.identity).GetComponent<HyperbolicTrajectory>().MoveObject(scoreDisplay.transform.position + new Vector3(1f, 0f, 0f)));
+                    chronoAnimator.Animate((int)Mathf.Round(chrono), (int)Mathf.Round(Mathf.Min(chrono + chronoBonus, chronoMax)), .65f);
                     chrono = Mathf.Min(chrono + chronoBonus, chronoMax);
                     StartCoroutine(FindTargetSprite(spriteClickable));
                 }

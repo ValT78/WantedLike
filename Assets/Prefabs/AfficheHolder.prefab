@@ -336,6 +336,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5067158560654560093}
   - component: {fileID: 5538998217570555116}
+  - component: {fileID: 8122543741720256069}
   - component: {fileID: 7357562149035610039}
   m_Layer: 5
   m_Name: timer
@@ -354,16 +355,16 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6095155042416670501}
   m_Father: {fileID: 90636484708485421}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -235.55, y: 560}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 74.72873, y: -321.6217}
   m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: -0.5, y: 2}
 --- !u!222 &5538998217570555116
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -372,6 +373,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2627996023230613496}
   m_CullTransparentMesh: 1
+--- !u!114 &8122543741720256069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2627996023230613496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 184371ef3f9612b4d966b4d29dd52509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxGrowth: 2
+  growthSpeed: 8
+  delayBeforeAdding: 0
+  delayAfterAdding: 0
+  chronoText: {fileID: 7357562149035610039}
 --- !u!114 &7357562149035610039
 MonoBehaviour:
   m_ObjectHideFlags: 0

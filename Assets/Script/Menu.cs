@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Menu : MonoBehaviour
@@ -13,7 +11,7 @@ public class Menu : MonoBehaviour
     }
     public void LoadGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("GameJuice");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
     }
 
     public void Leaderboard()

@@ -13,7 +13,7 @@ public class HyperbolicTrajectory : MonoBehaviour
         float startTime = Time.time;
         bool curveRight = Random.value > 0.5f;
 
-        while (Vector3.Distance(transform.position, targetPosition) > 0.2f)
+        while (transform!= null && Vector3.Distance(transform.position, targetPosition) > 0.2f)
         {
             float distCovered = (Time.time - startTime) * speed;
             float fractionOfJourney = distCovered / journeyLength;

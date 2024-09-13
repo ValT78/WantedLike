@@ -64,20 +64,23 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8b80c5571b0215c43928d2df377e9d08, type: 3}
   - {fileID: 21300000, guid: 9b393a7508ab1e84f9917500588b3cce, type: 3}
   - {fileID: 21300000, guid: 2958309def9532745aaa2cb47bbc17f3, type: 3}
+  - {fileID: 21300000, guid: 6c99ca86300d16a469ab5f0658dfce60, type: 3}
+  - {fileID: 21300000, guid: 5e7575277cd0e864ea21113e9c2e5ebc, type: 3}
   zoneSpawnSprite: {fileID: 0}
   affiche: {fileID: 0}
+  howManySpriteText: {fileID: 0}
   canvas: {fileID: 0}
+  howManySpriteToFind: 0
   scoreDisplay: {fileID: 0}
   bdaPointPrefab: {fileID: 2202628169334212215, guid: 89a648cedc9df824ea734e5529a31d52, type: 3}
   score: 0
-  blinkSpeedWrongTarget: 14
-  blinkNumberWrongTarget: 7
   bonusChronoPrefab: {fileID: 3443458494889623286, guid: 8d8757d6514a5664a80981f4493ac408, type: 3}
   chronoInitial: 15
   chronoBonus: 3
-  chronoMalus: 5
+  chronoMalus: -5
   chronoMax: 60
   chronoText: {fileID: 0}
+  chronoAnimator: {fileID: 0}
   gameOverText: {fileID: 707039327519512450, guid: cef9690d92f6aff49990dd42ee7c4cbe, type: 3}
   finalBlinkingScore: {fileID: 0}
 --- !u!114 &8219204280087089608
@@ -92,11 +95,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7466781372f1dae4e8fd54285d75bc2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneSpawnSprite: {fileID: 0}
   roundBatches: 1
   firstDifficulty: 5
   secondDifficulty: 20
   thirdDifficulty: 50
+  fourthDifficulty: 0
   chooseColors: []
   chooseRotations: []
-  chooseMovements: []
+  chooseRotationSpeeds: []
   chooseScale: []

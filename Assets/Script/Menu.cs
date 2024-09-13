@@ -4,6 +4,7 @@ public class Menu : MonoBehaviour
 {
     [SerializeField] private GameObject menu;
     [SerializeField] private GameObject leaderboard;
+    [SerializeField] private Transform leaderboardTable;
 
     public void QuitGame()
     {
@@ -18,6 +19,7 @@ public class Menu : MonoBehaviour
     {
         menu.SetActive(false);
         leaderboard.SetActive(true);
+        LeaderboardManager.Instance.DisplayLeaderboard(leaderboardTable);
     }
 
     public void Back()

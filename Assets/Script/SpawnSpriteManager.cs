@@ -78,7 +78,7 @@ public class SpawnSpriteManager : MonoBehaviour
             }
 
             // Coefficients de pondération pour chaque fonction
-            List<float> weights = new() { 3f, 3f, 3f, 3f, 1f };
+            List<float> weights = new() { 4f, 2f, 3f, 3f, 1f };
 
 
             List<int> selectedIndices = new();

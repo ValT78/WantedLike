@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -4358304922326105594}
   - component: {fileID: 261504220201766212}
   - component: {fileID: 4835590743804619612}
+  - component: {fileID: -1408422225207513915}
   m_Layer: 0
   m_Name: SpriteCliquable
   m_TagString: Untagged
@@ -54,7 +55,11 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   speed: 0
   bounceOnEdges: 0
+  isSinusoidal: 0
+  frequency: 0
+  amplitude: 0
   rectTransform: {fileID: 7919871997730060525}
+  isClicked: 0
 --- !u!222 &261504220201766212
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -93,3 +98,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-1408422225207513915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4474727536755891516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d5d305270e2134093ea9c7f29646b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  rotationSpeed: 350
+  hyperbolicFactor: 2

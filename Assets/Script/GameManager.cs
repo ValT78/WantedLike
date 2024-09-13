@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -126,17 +127,13 @@ public class GameManager : MonoBehaviour
         // Sélectionner les transformations
         howManySpriteToFind = 1;
         spawnSpriteManager.ChooseTransformation(score);
-        howManySpriteText.BlinkText("x" + howManySpriteToFind, 5);
+        if(howManySpriteToFind > 1) howManySpriteText.BlinkText("x" + howManySpriteToFind, 5);
 
         // Ajouter le sprite recherché parmi les sprites générés
         spriteRecherches = new();
         for (int i = 0; i < howManySpriteToFind; i++) // Générer un sprite de moins
         {
             spriteRecherches.Add(SummonSprite(index));
-        }
-        if(howManySpriteToFind > 1)
-        {
-            howManySpriteText.BlinkText("x" + howManySpriteToFind, 4);
         }
 
         // Générer les nouveaux sprites
@@ -182,10 +179,6 @@ public class GameManager : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
-            if (isGameOver)
-            {
-                SceneManager.LoadScene("Menu");
-            }
             Vector2 touchPosition = Input.mousePosition;
             if (Input.touchCount > 0)
             {
@@ -222,29 +215,30 @@ public class GameManager : MonoBehaviour
                     if (howManySpriteToFind < 1)
                     {
                         UpdateScore();
-                        Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized(true, normalizedTouchPosition);
+                        Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized((int)chronoBonus, normalizedTouchPosition);
 
                         StartCoroutine(Instantiate(bdaPointPrefab, Camera.main.ScreenToWorldPoint(touchPosition), Quaternion.identity).GetComponent<HyperbolicTrajectory>().MoveObject(scoreDisplay.transform.position + new Vector3(1f, 0f, 0f)));
                         chronoAnimator.AnimateBonus((int)Mathf.Ceil(chrono), (int)Mathf.Ceil(Mathf.Min(chrono + chronoBonus, chronoMax)), .65f);
                         chrono = Mathf.Min(chrono + chronoBonus, chronoMax);
                         StartCoroutine(FindTargetSprite(spriteClickable));
-                        howManySpriteText.BlinkText("x" + howManySpriteToFind, 3);
+                        howManySpriteText.GetComponent<TextMeshProUGUI>().text = "";
 
                     }
                     else
                     {
-                        Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized(true, normalizedTouchPosition);
-                        chrono = Mathf.Min(chrono + chronoBonus, chronoMax);
-                        StartCoroutine(BlinkSprite(spriteClickable, 7, 0.1f));
-                        howManySpriteText.BlinkText("x" + howManySpriteToFind, 4);
+                        spriteClickable.transform.SetSiblingIndex(zoneSpawnSprite.childCount);
+                        Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized((int)Mathf.Ceil(chronoBonus/2), normalizedTouchPosition);
+                        chrono = Mathf.Min(chrono + chronoBonus/2, chronoMax);
+                        StartCoroutine(spriteClickable.GetComponent<HyperbolicTrajectory>().MoveObject(howManySpriteText.transform.position));
+                        howManySpriteText.BlinkText("x" + howManySpriteToFind, 2);
 
                     }
                 }
                 else
                 {
-                    Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized(false, normalizedTouchPosition);
+                    Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized((int)chronoMalus, normalizedTouchPosition);
                     StartCoroutine(BlinkSprite(spriteClickable, 7, 0.3f));
-                    chrono = Mathf.Max(chrono - chronoMalus, 0);
+                    chrono = Mathf.Max(chrono + chronoMalus, 0);
                 }
             }
             
@@ -275,6 +269,10 @@ public class GameManager : MonoBehaviour
             {
                 Destroy(child.gameObject);
             }
+            else
+            {
+                child.GetComponent<SpriteClickable>().isClicked = true;
+            }
         }
     }
 
@@ -302,9 +300,11 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         isGameOver = true;
-        finalBlinkingScore.BlinkText("Final Score : " + score + "\nPress to Continue");
-        Instantiate(gameOverText);
-        DestroyAllSprites();
+        finalBlinkingScore.BlinkText("Final Score : " + score);
+        finalBlinkingScore.transform.GetChild(0).gameObject.SetActive(true);
+        finalBlinkingScore.transform.GetChild(1).gameObject.SetActive(true);
+        Instantiate(gameOverText, new Vector3(0,-3, 0), Quaternion.identity);
+        DestroyAllSprites(spriteRecherches[0].transform);
     }
 
     float GenerateExponentialRandom(float lambda)

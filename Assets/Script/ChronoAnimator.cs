@@ -13,6 +13,8 @@ public class ChronoAnimator : MonoBehaviour
     private float delayBeforeAdding = 0.2f;
     [SerializeField]
     private float delayAfterAdding = 0.2f;
+    [SerializeField]
+    private float positionShift = 2f;
 
     [Header("References")]
     [SerializeField]
@@ -21,10 +23,12 @@ public class ChronoAnimator : MonoBehaviour
     private PulseAnimation pulseAnimation;
 
     private float referenceScale;
+    private float referencePosition;
 
     private void Start()
     {
         referenceScale = transform.localScale.x;
+        referencePosition = transform.position.x;
     }
 
     // Tick is true whenever the integer part of the time changes
@@ -53,6 +57,7 @@ public class ChronoAnimator : MonoBehaviour
         {
             currentScale += growthSpeed * Time.deltaTime;
             transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+            transform.position = new Vector3(referencePosition + positionShift * (currentScale - referenceScale), transform.position.y, transform.position.z);
             yield return null;
         }
 
@@ -72,8 +77,11 @@ public class ChronoAnimator : MonoBehaviour
         {
             currentScale -= growthSpeed * Time.deltaTime;
             transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+            transform.position = new Vector3(referencePosition + positionShift * (currentScale - referenceScale), transform.position.y, transform.position.z);
+
             yield return null;
         }
         transform.localScale = Vector3.one * referenceScale;
+        transform.position = new Vector3(referencePosition, transform.position.y, transform.position.z);
     }
 }

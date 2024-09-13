@@ -450,7 +450,7 @@ GameObject:
   - component: {fileID: 311537418}
   m_Layer: 5
   m_Name: LeaderboardTable
-  m_TagString: Untagged
+  m_TagString: Leaderboard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -756,7 +756,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64.7
+  m_fontSize: 64.75
   m_fontSizeBase: 62
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1500,6 +1500,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menu: {fileID: 889183157}
   leaderboard: {fileID: 1395216518}
+  leaderboardTable: {fileID: 311537414}
+--- !u!1 &1315127597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1315127599}
+  - component: {fileID: 1315127598}
+  m_Layer: 0
+  m_Name: LeaderboardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1315127598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315127597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 436936c8976392e408deec5e00f86a55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entryPrefab: {fileID: 6551291499360486053, guid: 2a0e1c42cf0575e43ab86e51e06d2609, type: 3}
+  nameInputField: {fileID: 0}
+  playerNameTMP: {fileID: 0}
+  timeBetweenScoreUpdate: 10
+--- !u!4 &1315127599
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315127597}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1331460312
 GameObject:
   m_ObjectHideFlags: 0
@@ -2764,7 +2813,8 @@ PrefabInstance:
       value: LeaderboardEntry
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4873288951149886513, guid: 2a0e1c42cf0575e43ab86e51e06d2609, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a0e1c42cf0575e43ab86e51e06d2609, type: 3}
@@ -2779,3 +2829,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 628086065}
   - {fileID: 1385178776}
+  - {fileID: 1315127599}

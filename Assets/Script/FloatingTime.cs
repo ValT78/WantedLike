@@ -37,19 +37,19 @@ public class FloatingTime : MonoBehaviour
             canvasGroup.alpha -= Time.deltaTime / (lifetime * fadeDelay);
     }
 
-    public void Initialized(bool isBonus, Vector2 position)
+    public void Initialized(int bonus, Vector2 position)
     {
         // Centrer le texte + décaler vers le haut (adapter du world space au screen space)
         groupTransform.anchoredPosition = new Vector2((position.x)* 1080 - 540, (position.y)*1920 - 860);
 
-        if (isBonus)
+        if (bonus>=0)
         {
-            text.text = "+" + GameManager.Instance.chronoBonus.ToString();
+            text.text = "+" + bonus.ToString();
             text.color = Color.red;
         }
         else
         {
-            text.text = "-" + GameManager.Instance.chronoMalus.ToString();
+            text.text = bonus.ToString();
             text.color = Color.cyan;
         }
     }

@@ -43,11 +43,6 @@ public class LeaderboardManager : MonoBehaviour
                     Debug.Log("error starting LootLocker session" + response.errorData);
                     return;
                 }
-                print(response.text);
-                print(response.player_name);
-                print(response.player_id);
-                print(response.player_identifier);
-
                 playerName = response.player_name;
      
 

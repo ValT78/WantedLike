@@ -729,7 +729,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Find as much as possible !
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 47a67ca6c662dbe48bdbcabfd6e18b5c, type: 2}
   m_sharedMaterial: {fileID: 8670725384357954731, guid: 47a67ca6c662dbe48bdbcabfd6e18b5c, type: 2}
@@ -756,7 +756,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 62
+  m_fontSize: 72
   m_fontSizeBase: 62
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1835,6 +1835,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1520300176}
   - component: {fileID: 1520300178}
+  - component: {fileID: 1520300179}
   m_Layer: 5
   m_Name: SubTittle
   m_TagString: Untagged
@@ -1870,6 +1871,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520300175}
   m_CullTransparentMesh: 1
+--- !u!114 &1520300179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520300175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d322583142b939e43b160f1e55fec3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMeshPro: {fileID: 506890814}
 --- !u!1 &1522085867
 GameObject:
   m_ObjectHideFlags: 0

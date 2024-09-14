@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI chronoText;
     [SerializeField] private ChronoAnimator chronoAnimator;
     private float chrono;
-    private bool displayAnimation;
+    private bool displayAnimation = true;
 
     [Header("EndGame")]
     [SerializeField] private GameObject gameOverText;
@@ -71,8 +71,9 @@ public class GameManager : MonoBehaviour
     {
         raycaster = canvas.GetComponent<GraphicRaycaster>();
         eventSystem = EventSystem.current;
-        LaunchNewRound();
         scoreDisplay.BlinkText("0", 4);
+        StartCoroutine(DelayRound());
+
     }
 
     void Update()
@@ -83,6 +84,18 @@ public class GameManager : MonoBehaviour
         {
             UpdateChrono();
         }
+    }
+
+    private IEnumerator DelayRound()
+    {
+        // Choisir un sprite aléatoire pour l'affiche
+        int index = Random.Range(0, sprites.Length);
+        spriteRechercheID = index;
+        affiche.sprite = sprites[spriteRechercheID];
+
+        yield return new WaitForSeconds(1f);
+        displayAnimation = false;
+        LaunchNewRound(true);
     }
 
     private IEnumerator FindTargetSprite(SpriteClickable target)
@@ -112,15 +125,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void LaunchNewRound()
+    private void LaunchNewRound(bool firstTime = false)
     {
-        // Choisir un sprite aléatoire pour l'affiche
-        int index = Random.Range(0, sprites.Length);
-        spriteRechercheID = index;
+        if (!firstTime)
+        {
+            // Choisir un sprite aléatoire pour l'affiche
+            int index = Random.Range(0, sprites.Length);
+            spriteRechercheID = index;
+        }
 
         // Afficher le sprite sur l'affiche
-        affiche.sprite = sprites[index];
-
+        affiche.sprite = sprites[spriteRechercheID];
+        
         DestroyAllSprites(); // Détruire tous les sprites générés
         nombreDeSprites = (int)(7 * Mathf.Log(score / 1f + 1.4f, 2));
 
@@ -133,7 +149,7 @@ public class GameManager : MonoBehaviour
         spriteRecherches = new();
         for (int i = 0; i < howManySpriteToFind; i++) // Générer un sprite de moins
         {
-            spriteRecherches.Add(SummonSprite(index));
+            spriteRecherches.Add(SummonSprite(spriteRechercheID));
         }
 
         // Générer les nouveaux sprites
@@ -142,6 +158,8 @@ public class GameManager : MonoBehaviour
             SummonSprite();
         }
         SortSpriteById();
+
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.newRound);
     }
 
     private GameObject SummonSprite(int spriteIndex = -1)
@@ -212,6 +230,7 @@ public class GameManager : MonoBehaviour
                 if (isTargetClicked)
                 {
                     howManySpriteToFind--;
+                    SoundManager.Instance.PlaySFX(SoundManager.Instance.findCharacter);
                     if (howManySpriteToFind < 1)
                     {
                         UpdateScore();
@@ -231,6 +250,7 @@ public class GameManager : MonoBehaviour
                         chrono = Mathf.Min(chrono + chronoBonus/2, chronoMax);
                         StartCoroutine(spriteClickable.GetComponent<HyperbolicTrajectory>().MoveObject(howManySpriteText.transform.position));
                         howManySpriteText.BlinkText("x" + howManySpriteToFind, 2);
+                        spriteRecherches.Remove(spriteClickable.gameObject);
 
                     }
                 }
@@ -239,6 +259,7 @@ public class GameManager : MonoBehaviour
                     Instantiate(bonusChronoPrefab, Vector3.zero, Quaternion.identity, canvas.transform).Initialized((int)chronoMalus, normalizedTouchPosition);
                     StartCoroutine(BlinkSprite(spriteClickable, 7, 0.3f));
                     chrono = Mathf.Max(chrono + chronoMalus, 0);
+                    SoundManager.Instance.PlaySFX(SoundManager.Instance.wrongCharacter);
                 }
             }
             
@@ -258,6 +279,32 @@ public class GameManager : MonoBehaviour
         for(int i = 0; i < spriteRecherches.Count; i++)
         {
             spriteRecherches[i].transform.SetSiblingIndex(Mathf.CeilToInt(GenerateExponentialRandom(10f / (score + 1)) * sortedChildren.Length));
+        }
+        CheckOverlapAndRepositionSprites();
+    }
+
+    private void CheckOverlapAndRepositionSprites()
+    {
+        foreach (GameObject sprite in spriteRecherches)
+        {
+            RectTransform spriteRect = sprite.GetComponent<RectTransform>();
+            bool isOverlapping;
+            do
+            {
+                isOverlapping = false;
+                foreach (Transform otherSprite in zoneSpawnSprite.transform)
+                {
+                    if (spriteRecherches.Contains(otherSprite.gameObject)) continue;
+
+                    RectTransform otherRect = otherSprite.GetComponent<RectTransform>();
+                    if (otherRect.rect.Contains(spriteRect.rect.min) && otherRect.rect.Contains(spriteRect.rect.max))
+                    {
+                        spriteRect.anchoredPosition = new Vector2(Random.Range(zoneSpawnSprite.rect.xMin, zoneSpawnSprite.rect.xMax), Random.Range(zoneSpawnSprite.rect.yMin, zoneSpawnSprite.rect.yMax));
+                        isOverlapping = true;
+                        break;
+                    }
+                }
+            } while (isOverlapping);
         }
     }
 
@@ -293,18 +340,22 @@ public class GameManager : MonoBehaviour
         if (chrono <= 0)
         {
             chrono = 0;
-            GameOver();
+            StartCoroutine(GameOver());
         }
     }
 
-    private void GameOver()
+    private IEnumerator GameOver()
     {
         isGameOver = true;
+        Instantiate(gameOverText, new Vector3(0, -3, 0), Quaternion.identity);
+        DestroyAllSprites(spriteRecherches[0].transform);
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.deafeatSound);
+        yield return new WaitForSeconds(1.5f);
         finalBlinkingScore.BlinkText("Final Score : " + score);
         finalBlinkingScore.transform.GetChild(0).gameObject.SetActive(true);
         finalBlinkingScore.transform.GetChild(1).gameObject.SetActive(true);
-        Instantiate(gameOverText, new Vector3(0,-3, 0), Quaternion.identity);
-        DestroyAllSprites(spriteRecherches[0].transform);
+        DestroyAllSprites();
+
     }
 
     float GenerateExponentialRandom(float lambda)

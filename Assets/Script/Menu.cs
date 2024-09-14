@@ -13,6 +13,7 @@ public class Menu : MonoBehaviour
     public void LoadGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.chooseMenu);
     }
 
     public void Leaderboard()
@@ -20,11 +21,13 @@ public class Menu : MonoBehaviour
         menu.SetActive(false);
         leaderboard.SetActive(true);
         LeaderboardManager.Instance.DisplayLeaderboard(leaderboardTable);
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.chooseMenu);
     }
 
     public void Back()
     {
         menu.SetActive(true);
         leaderboard.SetActive(false);
+        SoundManager.Instance.PlaySFX(SoundManager.Instance.chooseMenu);
     }
 }

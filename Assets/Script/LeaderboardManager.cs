@@ -12,7 +12,7 @@ public class LeaderboardManager : MonoBehaviour
     [SerializeField] private GameObject entryPrefab;
     private readonly string leaderboardKey = "WantedBDAKey";
     public float timeBetweenScoreUpdate = 10f;
-    private string playerName;
+    [HideInInspector] public string playerName;
 
 
     private void Awake()
@@ -86,19 +86,6 @@ public class LeaderboardManager : MonoBehaviour
             }
         });
         Debug.Log("Changing name to " + name);
-
-
-    }
-
-    public string RandomPlayerName()
-    {
-        string[] baseFunnyWords = { "Gamer", "Prince", "King", "Queen", "Lord", "Mayor", "President", "Pope", "Captain" };
-        string[] baseFunnyAdjectif1 = { "Mini", "Funny", "Crazy", "Silly", "Smart", "Wise", "Clever", "Friendly" };
-        string[] baseFunnyAdjectif2 = { "Big", "Small", "Tiny", "Huge", "Giant", "Enormous", "Gigantic", "Colossal" };
-
-        string funny_name = baseFunnyAdjectif1[Random.Range(0, baseFunnyAdjectif1.Length)] + baseFunnyAdjectif2[Random.Range(0, baseFunnyAdjectif2.Length)] + baseFunnyWords[Random.Range(0, baseFunnyWords.Length)];
-        Debug.Log("Generated name : " + funny_name);
-        return funny_name;
     }
 
     public void DisplayLeaderboard(Transform leaderboardTable)

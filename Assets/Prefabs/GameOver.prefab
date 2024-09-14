@@ -98,5 +98,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxScale: {x: 0.45, y: 0.45, z: 0.45}
-  scaleUpTime: 2.5
+  scaleUpTime: 1.5
   scaleDownTime: 1

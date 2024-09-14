@@ -36,7 +36,10 @@ public class ChronoAnimator : MonoBehaviour
     {
         chronoText.text = Mathf.Ceil(time).ToString();
         if (tick && time > 0)
-            pulseAnimation.Pulse(10/time);
+        {
+            pulseAnimation.Pulse(20 / Mathf.Pow(time, 1.2f));
+            SoundManager.Instance.PlayChrono(SoundManager.Instance.tikChrono, Mathf.Lerp(0.1f, 1f, 1-time/60));
+        }
     }
 
     public void AnimateBonus(int from, int to, float duration)

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using LootLocker.Requests;
 using TMPro;
 using UnityEngine.SocialPlatforms.Impl;
+using System.Collections.Generic;
 
 public class LeaderboardManager : MonoBehaviour
 {
@@ -42,7 +43,12 @@ public class LeaderboardManager : MonoBehaviour
                     Debug.Log("error starting LootLocker session" + response.errorData);
                     return;
                 }
+                print(response.text);
+                print(response.player_name);
+                print(response.player_id);
+                print(response.player_identifier);
 
+                playerName = response.player_name;
      
 
                 Debug.Log("successfully started LootLocker session");
@@ -95,7 +101,7 @@ public class LeaderboardManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        int count = 50;
+        int count = 150;
 
         // Récupérer les scores depuis le serveur
         LootLockerSDKManager.GetScoreList(leaderboardKey, count, 0, (response) =>
@@ -103,16 +109,26 @@ public class LeaderboardManager : MonoBehaviour
             if (response.success)
             {
                 LootLockerLeaderboardMember[] members = response.items;
-                print(members.Length);
+                var accounts = new Dictionary<string, int>();
+
 
                 for (int i = 0; i < members.Length; i++)
                 {
-                    string name = members[i].player.name != "" ? members[i].player.name : members[i].player.id.ToString();
-/*                    tempString += members[i].rank + ". ";
-*/                    
+                    string name = members[i].player.name != "" ? members[i].player.name.ToLower() : members[i].player.id.ToString().ToLower(); 
+                    int score = members[i].score;
                     
-                    Instantiate(entryPrefab, leaderboardTable).GetComponent<LeaderboardEntryUI>().SetEntry(name, members[i].score);
-
+                    if(accounts.ContainsKey(name))
+                    {
+                        if (accounts[name] > score)
+                        {
+                            continue;
+                        }
+                    }
+                    accounts.Add(name, score);
+                }
+                foreach (var account in accounts)
+                {
+                    Instantiate(entryPrefab, leaderboardTable).GetComponent<LeaderboardEntryUI>().SetEntry(account.Key, account.Value);
                 }
             }
             else

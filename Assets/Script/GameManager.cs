@@ -297,15 +297,30 @@ public class GameManager : MonoBehaviour
                     if (spriteRecherches.Contains(otherSprite.gameObject)) continue;
 
                     RectTransform otherRect = otherSprite.GetComponent<RectTransform>();
-                    if (otherRect.rect.Contains(spriteRect.rect.min) && otherRect.rect.Contains(spriteRect.rect.max))
+                    if (IsFullyCovered(spriteRect, otherRect))
                     {
-                        spriteRect.anchoredPosition = new Vector2(Random.Range(zoneSpawnSprite.rect.xMin, zoneSpawnSprite.rect.xMax), Random.Range(zoneSpawnSprite.rect.yMin, zoneSpawnSprite.rect.yMax));
+                        spriteRect.localPosition = new Vector2(Random.Range(zoneSpawnSprite.rect.xMin, zoneSpawnSprite.rect.xMax), Random.Range(zoneSpawnSprite.rect.yMin, zoneSpawnSprite.rect.yMax));
                         isOverlapping = true;
                         break;
                     }
                 }
             } while (isOverlapping);
         }
+    }
+
+    private bool IsFullyCovered(RectTransform spriteRect, RectTransform otherRect)
+    {
+        Vector3[] spriteCorners = new Vector3[4];
+        spriteRect.GetWorldCorners(spriteCorners);
+
+        foreach (Vector3 corner in spriteCorners)
+        {
+            if (!otherRect.rect.Contains(otherRect.InverseTransformPoint(corner)))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void DestroyAllSprites(Transform exception = null)

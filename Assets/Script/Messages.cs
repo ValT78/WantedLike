@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Messages : MonoBehaviour
 {
     public TextMeshProUGUI textMeshPro;
+    public TextAsset privateKeyAsset;
 
     private List<string> messages;
     private List<SpecialMessage> specialMessages;
@@ -15,8 +16,8 @@ public class Messages : MonoBehaviour
 
     private void Awake()
     {
-        LoadMessages();
-    }
+/*        LoadMessages();
+*/    }
 
     private void OnEnable()
     {
@@ -36,15 +37,35 @@ public class Messages : MonoBehaviour
         }
     }
 
-    private void LoadMessages()
+    /*private void LoadMessages()
     {
         TextAsset jsonText = Resources.Load<TextAsset>("messages");
         MessageData messageData = JsonUtility.FromJson<MessageData>(jsonText.text);
 
-        messages = new List<string>(messageData.messages);
-        specialMessages = new List<SpecialMessage>(messageData.specialMessages);
-        welcomeMessages = new List<string>(messageData.welcomeMessages);
-    }
+        string privateKey = privateKeyAsset.text;
+
+        messages = new List<string>();
+        foreach (var message in messageData.messages)
+        {
+            messages.Add(Decrypt(message, privateKey));
+        }
+
+        specialMessages = new List<SpecialMessage>();
+        foreach (var specialMessage in messageData.specialMessages)
+        {
+            specialMessages.Add(new SpecialMessage
+            {
+                message = Decrypt(specialMessage.message, privateKey),
+                chance = specialMessage.chance
+            });
+        }
+
+        welcomeMessages = new List<string>();
+        foreach (var welcomeMessage in messageData.welcomeMessages)
+        {
+            welcomeMessages.Add(Decrypt(welcomeMessage, privateKey));
+        }
+    }*/
 
     private string GetRandomMessage()
     {
@@ -73,6 +94,20 @@ public class Messages : MonoBehaviour
         int randomIndex = Random.Range(0, messages.Count);
         return messages[randomIndex];
     }
+
+    /*private string Decrypt(string cipherText, string privateKey)
+    {
+        byte[] dataToDecrypt = Convert.FromBase64String(cipherText);
+        byte[] decryptedData;
+
+        using (var rsa = new RSACryptoServiceProvider())
+        {
+            rsa.ImportRSAPrivateKey(Convert.FromBase64String(privateKey), out _);
+            decryptedData = rsa.Decrypt(dataToDecrypt, RSAEncryptionPadding.Pkcs1);
+        }
+
+        return Encoding.UTF8.GetString(decryptedData);
+    }*/
 
     [System.Serializable]
     private class MessageData

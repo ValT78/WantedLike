@@ -17,18 +17,18 @@ public class RSAEncryptionHelper
 
         return Convert.ToBase64String(encryptedData);
     }
+}
 
-    public static string Decrypt(string cipherText, string privateKey)
+
+
+public class RSAKeyGenerator
+{
+    public static void GenerateKeys(out string publicKey, out string privateKey)
     {
-        byte[] dataToDecrypt = Convert.FromBase64String(cipherText);
-        byte[] decryptedData;
-
-        using (var rsa = new RSACryptoServiceProvider())
+        using (var rsa = new RSACryptoServiceProvider(2048))
         {
-            rsa.ImportRSAPrivateKey(Convert.FromBase64String(privateKey), out _);
-            decryptedData = rsa.Decrypt(dataToDecrypt, RSAEncryptionPadding.Pkcs1);
+            publicKey = Convert.ToBase64String(rsa.ExportRSAPublicKey());
+            privateKey = Convert.ToBase64String(rsa.ExportRSAPrivateKey());
         }
-
-        return Encoding.UTF8.GetString(decryptedData);
     }
 }
